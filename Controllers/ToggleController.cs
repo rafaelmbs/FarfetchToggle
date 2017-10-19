@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FarfetchToggleService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarfetchToggleService.Controllers
@@ -9,18 +10,18 @@ namespace FarfetchToggleService.Controllers
     [Route("api/[controller]")]
     public class ToggleController : Controller
     {
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ToggleService _service;
+
+        public ToggleController(ToggleService service)
         {
-            return new string[] { "value1", "value2" };
+            _service = service;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return id.ToString();
         }
 
         // POST api/values
