@@ -5,22 +5,42 @@ using Microsoft.AspNetCore.Mvc;
 using FarfetchToggleService.Repository.Repositories;
 using FarfetchToggleService.Repository.Views;
 using Newtonsoft.Json;
+using MongoDB.Bson;
 
 namespace FarfetchToggleService.Services
 {
     public class ToggleService
     {
-        private readonly IToggleRepository _aeroRepository;
-        public ToggleService(IToggleRepository aeroRepository)
+        private readonly IToggleRepository _toggleRepository;
+        public ToggleService(IToggleRepository toggleRepository)
         {
-            _aeroRepository = aeroRepository;
+            _toggleRepository = toggleRepository;
         }
 
-        public async Task<IList<ToggleView>> GetInfo(string icao)
+        public IEnumerable<ToggleView> GetToggles()
         {
-            var result = await _aeroRepository.GetInfo(icao);
+            var result = _toggleRepository.GetToggles();
 
             return result;
+        }
+
+        public ToggleView GetToggle(ObjectId id)
+        {
+            var result = _toggleRepository.GetToggle(id);
+
+            return result;
+        }
+
+        public ToggleView CreateToggle(ToggleView toggle)
+        {
+            var result = _toggleRepository.CreateToggle(toggle);
+
+            return result;
+        }
+
+        public void UpdateToggle(ObjectId id, ToggleView toggle)
+        {
+            _toggleRepository.UpdateToggle(id, toggle);
         }
     }
 }

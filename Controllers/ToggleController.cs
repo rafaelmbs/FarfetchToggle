@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FarfetchToggleService.Repository.Views;
 using FarfetchToggleService.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace FarfetchToggleService.Controllers
 {
@@ -17,28 +19,33 @@ namespace FarfetchToggleService.Controllers
             _service = service;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        public IEnumerable<ToggleView> Get()
         {
-            return id.ToString();
+            return _service.GetToggles();
         }
 
-        // POST api/values
+        [HttpGet("{id}")]
+        public IActionResult GetById(string id)
+        {
+            var recId = new ObjectId(id);
+
+            var toggle = _service.GetToggle(recId);
+            if (toggle == null)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(toggle);
+        }
+
         [HttpPost]
         public void Post([FromBody]string value)
         {
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
         {
         }
     }
