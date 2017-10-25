@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FarfetchToggleService.Contracts;
 using FarfetchToggleService.Repository.Views;
 using FarfetchToggleService.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,17 +21,17 @@ namespace FarfetchToggleService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ToggleView> Get()
+        public ActionResult Get()
         {
-            return _service.GetToggles();
+            var result = _service.GetToggles();
+
+            return new ObjectResult(result);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
-            var registryId = new ObjectId(id);
-
-            var toggle = _service.GetToggle(registryId);
+            var toggle = _service.GetToggle(Int32.Parse(id));
             if (toggle == null)
             {
                 return NotFound();
@@ -40,23 +41,22 @@ namespace FarfetchToggleService.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]ToggleView toggle)
+        public IActionResult Post([FromBody]TogglePostRequest toggle)
         {
             _service.CreateToggle(toggle);
-            return new OkObjectResult(toggle);
+            return new OkResult();
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody]ToggleView toggle)
+        public IActionResult Put(string id, [FromBody]TogglePutRequest toggle)
         {
-            var registryId = new ObjectId(id);
-            var toggleReturned = _service.GetToggle(registryId);
+            var toggleReturned = _service.GetToggle(Int32.Parse(id));
             if (toggleReturned == null)
             {
                 return NotFound();
             }
             
-            _service.UpdateToggle(registryId, toggle);
+            _service.UpdateToggle(Int32.Parse(id), toggle);
             return new OkResult();
         }
     }

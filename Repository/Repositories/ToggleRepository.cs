@@ -33,26 +33,24 @@ namespace FarfetchToggleService.Repository.Repositories
             return _db.GetCollection<ToggleView>("Toggle").FindAll();
         }
 
-        public ToggleView GetToggle(ObjectId id)
+        public ToggleView GetToggle(int id)
         {
-            var result = Query<ToggleView>.EQ(t => t.Id, id);
+            var result = Query<ToggleView>.EQ(t => t.ToggleId, id);
             return _db.GetCollection<ToggleView>("Toggle").FindOne(result);
         }
 
-        public ToggleView CreateToggle(ToggleView toggle)
+        public void CreateToggle(TogglePostRequest toggle)
         {
             _db.GetCollection<ToggleView>("Toggle").Save(toggle);
-
-            return toggle;
         }
 
-        public void UpdateToggle(ObjectId id, ToggleView toggle)
+        public void UpdateToggle(int id, TogglePutRequest toggle)
         {
-            toggle.Id = id;
+            toggle.ToggleId = id;
 
-            var result = Query<ToggleView>.EQ(t => t.Id, id);
+            var result = Query<ToggleView>.EQ(t => t.ToggleId, id);
 
-            var operation = Update<ToggleView>.Replace(toggle);
+            var operation = Update<TogglePutRequest>.Replace(toggle);
 
             _db.GetCollection<ToggleView>("Toggle").Update(result, operation);
         }

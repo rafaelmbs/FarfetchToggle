@@ -6,6 +6,7 @@ using FarfetchToggleService.Repository.Repositories;
 using FarfetchToggleService.Repository.Views;
 using Newtonsoft.Json;
 using MongoDB.Bson;
+using FarfetchToggleService.Contracts;
 
 namespace FarfetchToggleService.Services
 {
@@ -24,21 +25,19 @@ namespace FarfetchToggleService.Services
             return result;
         }
 
-        public ToggleView GetToggle(ObjectId id)
+        public ToggleView GetToggle(int id)
         {
             var result = _toggleRepository.GetToggle(id);
 
             return result;
         }
 
-        public ToggleView CreateToggle(ToggleView toggle)
+        public void CreateToggle(TogglePostRequest toggle)
         {
-            var result = _toggleRepository.CreateToggle(toggle);
-
-            return result;
+            _toggleRepository.CreateToggle(toggle);
         }
 
-        public void UpdateToggle(ObjectId id, ToggleView toggle)
+        public void UpdateToggle(int id, TogglePutRequest toggle)
         {
             _toggleRepository.UpdateToggle(id, toggle);
         }
