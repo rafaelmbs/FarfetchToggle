@@ -2,43 +2,62 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FarfetchToggleService.Contracts;
+using FarfetchToggleService.Repository.Views;
+using FarfetchToggleService.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace FarfetchToggleService.Controllers
 {
     [Route("api/[controller]")]
     public class ToggleController : Controller
     {
-        // GET api/values
+        private readonly ToggleService _service;
+
+        public ToggleController(ToggleService service)
+        {
+            _service = service;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var result = _service.GetToggles();
+
+            return new ObjectResult(result);
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetById(string id)
         {
-            return "value";
+            var toggle = _service.GetToggle(Int32.Parse(id));
+            if (toggle == null)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(toggle);
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]TogglePostRequest toggle)
         {
+            _service.CreateToggle(toggle);
+            return new OkResult();
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(string id, [FromBody]TogglePutRequest toggle)
         {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var toggleReturned = _service.GetToggle(Int32.Parse(id));
+            if (toggleReturned == null)
+            {
+                return NotFound();
+            }
+            
+            _service.UpdateToggle(Int32.Parse(id), toggle);
+            return new OkResult();
         }
     }
 }
