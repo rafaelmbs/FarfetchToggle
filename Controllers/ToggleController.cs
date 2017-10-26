@@ -43,7 +43,17 @@ namespace FarfetchToggleService.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]TogglePostRequest toggle)
         {
-            _service.CreateToggle(toggle);
+            var obj = _service.GetToggle(toggle.ToggleId);
+
+            if (obj == null)
+            {
+                _service.CreateToggle(toggle);
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
+            
             return new OkResult();
         }
 
@@ -51,6 +61,7 @@ namespace FarfetchToggleService.Controllers
         public IActionResult Put(string id, [FromBody]TogglePutRequest toggle)
         {
             var toggleReturned = _service.GetToggle(Int32.Parse(id));
+
             if (toggleReturned == null)
             {
                 return NotFound();
