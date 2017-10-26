@@ -6,12 +6,10 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace FarfetchToggleService.Contracts
 {
     public class TogglePutRequest
-    {
-         public ObjectId Id { get; set; }
-
+    {        
         [BsonElement("ToggleId")]
         public int ToggleId { get; set; }
-        
+
         [BsonElement("Name")]
         public string Name { get; set; }
 
