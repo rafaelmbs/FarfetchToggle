@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using FarfetchToggleService.Contracts;
-using FarfetchToggleService.Repository.Views;
+using FarfetchToggleService.Repository.Views.Toggle;
 using FarfetchToggleService.Settings;
 using Newtonsoft.Json;
 using MongoDB.Driver;

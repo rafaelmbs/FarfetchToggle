@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FarfetchToggleService.Repository.Views;
+using FarfetchToggleService.Repository.Views.Toggle;
 
 namespace FarfetchToggleService.Contracts
 {

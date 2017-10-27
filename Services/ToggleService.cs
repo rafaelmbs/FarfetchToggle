@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FarfetchToggleService.Repository.Repositories;
-using FarfetchToggleService.Repository.Views;
+using FarfetchToggleService.Repository.Views.Toggle;
 using Newtonsoft.Json;
 using MongoDB.Bson;
 using FarfetchToggleService.Contracts;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FarfetchToggleService.Contracts;
-using FarfetchToggleService.Repository.Views;
+using FarfetchToggleService.Repository.Views.Toggle;
 using MongoDB.Bson;
 
 namespace FarfetchToggleService.Repository.Repositories

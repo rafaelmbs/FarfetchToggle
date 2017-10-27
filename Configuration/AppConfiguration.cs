@@ -14,10 +14,12 @@ namespace FarfetchToggleService.Configuration
             services.Configure<AppSettings>(configuration);
 
             //Services
-            services.AddTransient<ToggleService>();         
+            services.AddTransient<MessageService>();
+            services.AddTransient<ToggleService>();
 
             //Repositories
-            services.AddTransient<IToggleRepository, ToggleRepository>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
+            services.AddTransient<IToggleRepository, ToggleRepository>();            
         }
     }
 }
