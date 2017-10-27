@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace FarfetchToggleService.Repository.Views
+namespace FarfetchToggleService.Repository.Views.Toggle
 {
     public class ToggleView
     {        
