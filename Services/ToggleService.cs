@@ -13,9 +13,12 @@ namespace FarfetchToggleService.Services
     public class ToggleService
     {
         private readonly IToggleRepository _toggleRepository;
-        public ToggleService(IToggleRepository toggleRepository)
+
+        private readonly MessageService _messageService;
+        public ToggleService(IToggleRepository toggleRepository, MessageService messageService)
         {
             _toggleRepository = toggleRepository;
+            _messageService = messageService;
         }
 
         public IEnumerable<ToggleView> GetToggles()
@@ -35,6 +38,11 @@ namespace FarfetchToggleService.Services
         public void CreateToggle(TogglePostRequest toggle)
         {
             _toggleRepository.CreateToggle(toggle);
+
+            string subject = string.Format("Service Updated - {0}", toggle.Name);
+            string message = string.Format("The following service {0} - {1} value was updated to {1}", toggle.ToggleId, toggle.Name, toggle.Value);
+
+            _messageService.SendMessage(subject, message);
         }
 
         public void UpdateToggle(int id, TogglePutRequest toggle)

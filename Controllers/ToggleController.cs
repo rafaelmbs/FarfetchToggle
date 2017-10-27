@@ -21,7 +21,7 @@ namespace FarfetchToggleService.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public IActionResult Get()
         {
             var result = _service.GetToggles();
 
@@ -32,11 +32,12 @@ namespace FarfetchToggleService.Controllers
         public IActionResult GetById(string id)
         {
             var toggle = _service.GetToggle(Int32.Parse(id));
+
             if (toggle == null)
             {
                 return NotFound();
             }
-
+            
             return new ObjectResult(toggle);
         }
 

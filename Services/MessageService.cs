@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using FarfetchToggleService.Contracts;
 using FarfetchToggleService.Repository.Repositories;
 
 namespace FarfetchToggleService.Services
@@ -8,6 +10,11 @@ namespace FarfetchToggleService.Services
         public MessageService(IMessageRepository messageRepository)
         {
             _messageRepository = messageRepository;
+        }
+
+        public Task<MessageGetResponse> SendMessage(string subject, string message)
+        {            
+            return _messageRepository.SendMessage(subject, message);
         }
     }
 }
