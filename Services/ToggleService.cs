@@ -39,8 +39,8 @@ namespace FarfetchToggleService.Services
         {
             _toggleRepository.CreateToggle(toggle);
 
-            string subject = string.Format("Service Updated - {0}", toggle.Name);
-            string message = string.Format("The following service {0} - {1} value was updated to {1}", toggle.ToggleId, toggle.Name, toggle.Value);
+            string subject = string.Format("Service Created - '{0}'", toggle.Name);
+            string message = string.Format("The following service '{0}' - '{1}' was created with '{2}' value", toggle.ToggleId, toggle.Name, toggle.Value);
 
             _messageService.SendMessage(subject, message);
         }
@@ -48,6 +48,11 @@ namespace FarfetchToggleService.Services
         public void UpdateToggle(int id, TogglePutRequest toggle)
         {
             _toggleRepository.UpdateToggle(id, toggle);
+
+            string subject = string.Format("Service Updated - '{0}'", toggle.Name);
+            string message = string.Format("The following service '{0}' - '{1}' was updated to '{2}' value", toggle.ToggleId, toggle.Name, toggle.Value);
+
+            _messageService.SendMessage(subject, message);
         }
     }
 }
