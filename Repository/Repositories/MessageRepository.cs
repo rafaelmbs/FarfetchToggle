@@ -36,7 +36,7 @@ namespace FarfetchToggleService.Repository.Repositories
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_config.Value.URI_SNS);
-                var response = await client.GetAsync($"subscription/{subject}/{message}");
+                var response = await client.GetAsync($"notification/{subject}/{message}");
                 response.EnsureSuccessStatusCode();
 
                 var stringResult = await response.Content.ReadAsStringAsync();

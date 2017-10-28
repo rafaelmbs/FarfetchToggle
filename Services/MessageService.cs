@@ -12,6 +12,11 @@ namespace FarfetchToggleService.Services
             _messageRepository = messageRepository;
         }
 
+        public Task<SubscribeGetResponse> Subscribe(string email)
+        {
+            return _messageRepository.Subscribe(email);
+        }
+
         public Task<MessageGetResponse> SendMessage(string subject, string message)
         {            
             return _messageRepository.SendMessage(subject, message);
