@@ -9,8 +9,14 @@ namespace FarfetchToggleService.Repository.Mapping
     {
         public ToggleGetMap()
         {
-            CreateMap<List<ToggleView>, ToggleGetResponse>()
-                .ForMember(dest => dest.listToggle, opt => opt.MapFrom(src => src));;
+            CreateMap<IEnumerable<ToggleView>, ToggleGetResponse>();
+                // .ForMember(dest => dest, opt => opt.MapFrom(src => Mapper.Map<IEnumerable<ToggleView>, ToggleResultView>(src)));
+
+            // CreateMap<ToggleView, ToggleResultView>()
+            //     .ForMember(dest => dest.IdToggle, opt => opt.MapFrom(src => src.Id.ToString()))
+            //     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            //     .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
+            //     .ForMember(dest => dest.OnlyAdmin, opt => opt.MapFrom(src => src.OnlyAdmin));
         }
     }
 }

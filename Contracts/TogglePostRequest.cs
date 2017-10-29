@@ -7,11 +7,8 @@ namespace FarfetchToggleService.Contracts
 {
     public class TogglePostRequest
     {
-         public ObjectId Id { get; set; }
+        public ObjectId Id { get; set; }
 
-        [BsonElement("ToggleId")]
-        public int ToggleId { get; set; }
-        
         [BsonElement("Name")]
         public string Name { get; set; }
 

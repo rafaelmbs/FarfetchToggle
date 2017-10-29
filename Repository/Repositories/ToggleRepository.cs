@@ -49,6 +49,8 @@ namespace FarfetchToggleService.Repository.Repositories
 
         public void UpdateToggle(ObjectId id, TogglePutRequest toggle)
         {
+            toggle.Id = id;
+
             var result = Query<ToggleView>.EQ(t => t.Id, id);
             var operation = Update<TogglePutRequest>.Replace(toggle);
 
