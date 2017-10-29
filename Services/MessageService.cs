@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using FarfetchToggleService.Contracts;
 using FarfetchToggleService.Repository.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FarfetchToggleService.Services
 {
@@ -12,14 +13,18 @@ namespace FarfetchToggleService.Services
             _messageRepository = messageRepository;
         }
 
-        public Task<SubscribeGetResponse> Subscribe(string email)
+        public async Task<SubscribeGetResponse> Subscribe(string email)
         {
-            return _messageRepository.Subscribe(email);
+            var result = await _messageRepository.Subscribe(email);
+
+            return result;
         }
 
-        public Task<MessageGetResponse> SendMessage(string subject, string message)
-        {            
-            return _messageRepository.SendMessage(subject, message);
+        public async Task<MessageGetResponse> SendMessage(string subject, string message)
+        {
+            var result = await _messageRepository.SendMessage(subject, message);
+
+            return result;
         }
     }
 }

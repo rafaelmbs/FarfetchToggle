@@ -1,3 +1,5 @@
+using System.Net.Http;
+using System.Threading.Tasks;
 using FarfetchToggleService.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,11 +16,18 @@ namespace FarfetchToggleService.Controllers
         }
 
         [HttpGet("{email}")]
-        public IActionResult Get(string email)
+        public async Task<IActionResult> Get(string email)  
         {
-            var result = _service.Subscribe(email);
-
-            return new ObjectResult(result);
+            try
+            {
+                var result = await _service.Subscribe(email);
+                
+                return Json(new { result });
+            }
+            catch (HttpRequestException httpRequestException)
+            {
+                return BadRequest(httpRequestException.Message);
+            }
         }
     }
 }
