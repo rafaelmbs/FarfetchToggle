@@ -24,13 +24,24 @@ namespace FarfetchToggleService.Services
             _messageService = messageService;
         }
 
-        public IEnumerable<ToggleView> GetToggles()
+        public List<ToggleResultView> GetToggles()
         {
             var result = _toggleRepository.GetToggles();
 
-            var response = _mapper.Map<ToggleGetResponse>(result);
+            var response = new List<ToggleResultView>();
 
-            return result;
+            foreach(var r in result)
+            {
+                var item = new ToggleResultView();
+                item.IdToggle = r.Id.ToString();
+                item.Name = r.Name;
+                item.Value = r.Value;
+                item.OnlyAdmin = r.OnlyAdmin;
+
+                response.Add(item);
+            }
+
+            return response;
         }
 
         public ToggleGetByIdResponse GetToggle(string id)
@@ -47,7 +58,7 @@ namespace FarfetchToggleService.Services
             _toggleRepository.CreateToggle(toggle);
 
             string subject = string.Format("Service Created - '{0}'", toggle.Name);
-            string message = string.Format("The following service '{0}' - '{1}' was created with '{2}' value", toggle.ToggleId, toggle.Name, toggle.Value);
+            string message = string.Format("The following service '{0}' was created with '{1}' value", toggle.Name, toggle.Value);
 
             await _messageService.SendMessage(subject, message);
         }
@@ -57,7 +68,7 @@ namespace FarfetchToggleService.Services
             _toggleRepository.UpdateToggle(new ObjectId(id), toggle);
 
             string subject = string.Format("Service Updated - '{0}'", toggle.Name);
-            string message = string.Format("The following service '{0}' - '{1}' was updated to '{2}' value", toggle.ToggleId, toggle.Name, toggle.Value);
+            string message = string.Format("The following service '{0}' was updated to '{1}' value", toggle.Name, toggle.Value);
 
             await _messageService.SendMessage(subject, message);
         }

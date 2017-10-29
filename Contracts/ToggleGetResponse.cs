@@ -5,6 +5,6 @@ namespace FarfetchToggleService.Contracts
 {
     public class ToggleGetResponse
     {
-        public IEnumerable<ToggleResultView> listToggle { get; set; }
+        public IList<ToggleResultView> items { get; set;}
     }
 }
