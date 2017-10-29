@@ -10,10 +10,10 @@ namespace FarfetchToggleService.Repository.Repositories
     {
         IEnumerable<ToggleView> GetToggles();
 
-        ToggleView GetToggle(int id);
+        ToggleView GetToggle(ObjectId id);
 
         void CreateToggle(TogglePostRequest toggle);
 
-        void UpdateToggle(int id, TogglePutRequest toggle);
+        void UpdateToggle(ObjectId id, TogglePutRequest toggle);
     }
 }

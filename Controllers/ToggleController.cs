@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FarfetchToggleService.Contracts;
 using FarfetchToggleService.Repository.Views;
@@ -23,37 +24,35 @@ namespace FarfetchToggleService.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _service.GetToggles();
-
-            return new ObjectResult(result);
+            try
+            {
+                var result = _service.GetToggles();
+                
+                return Json(result);
+            }
+            catch (HttpRequestException httpRequestException)
+            {
+                return BadRequest(httpRequestException.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
-            var toggle = _service.GetToggle(Int32.Parse(id));
+            var toggle = _service.GetToggle(id);
 
             if (toggle == null)
             {
                 return NotFound();
             }
             
-            return new ObjectResult(toggle);
+            return Json(toggle);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody]TogglePostRequest toggle)
         {
-            var obj = _service.GetToggle(toggle.ToggleId);
-
-            if (obj == null)
-            {
-                _service.CreateToggle(toggle);
-            }
-            else
-            {
-                return new BadRequestResult();
-            }
+            _service.CreateToggle(toggle);
             
             return new OkResult();
         }
@@ -61,14 +60,14 @@ namespace FarfetchToggleService.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody]TogglePutRequest toggle)
         {
-            var toggleReturned = _service.GetToggle(Int32.Parse(id));
+            var result = _service.GetToggle(id);
 
-            if (toggleReturned == null)
+            if (result == null)
             {
                 return NotFound();
             }
             
-            _service.UpdateToggle(Int32.Parse(id), toggle);
+            _service.UpdateToggle(id, toggle);
             return new OkResult();
         }
     }
