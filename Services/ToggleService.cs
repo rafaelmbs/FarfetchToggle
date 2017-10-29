@@ -24,22 +24,11 @@ namespace FarfetchToggleService.Services
             _messageService = messageService;
         }
 
-        public List<ToggleResultView> GetToggles()
+        public ToggleGetResponse GetToggles()
         {
             var result = _toggleRepository.GetToggles();
 
-            var response = new List<ToggleResultView>();
-
-            foreach(var r in result)
-            {
-                var item = new ToggleResultView();
-                item.IdToggle = r.Id.ToString();
-                item.Name = r.Name;
-                item.Value = r.Value;
-                item.OnlyAdmin = r.OnlyAdmin;
-
-                response.Add(item);
-            }
+            var response = _mapper.Map<ToggleGetResponse>(result);
 
             return response;
         }

@@ -31,9 +31,24 @@ namespace FarfetchToggleService.Repository.Repositories
             _db = _server.GetDatabase(_config.Value.Database);
         }
 
-        public IEnumerable<ToggleView> GetToggles()
+        public List<ToggleResultView> GetToggles()
         {
-            return _db.GetCollection<ToggleView>(_collection).FindAll();
+            var data = _db.GetCollection<ToggleView>(_collection).FindAll();
+
+            var result = new List<ToggleResultView>();
+
+            foreach(var r in data)
+            {
+                var item = new ToggleResultView();
+                item.IdToggle = r.Id.ToString();
+                item.Name = r.Name;
+                item.Value = r.Value;
+                item.OnlyAdmin = r.OnlyAdmin;
+
+                result.Add(item);
+            }
+
+            return result;
         }
 
         public ToggleView GetToggle(ObjectId id)
