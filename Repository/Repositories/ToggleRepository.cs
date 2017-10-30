@@ -1,4 +1,4 @@
-using FarfetchToggleService.Contracts;
+using FarfetchToggleService.Contracts.Toggle;
 using FarfetchToggleService.Repository.Views.Toggle;
 using FarfetchToggleService.Settings;
 using Microsoft.Extensions.Options;
@@ -31,16 +31,16 @@ namespace FarfetchToggleService.Repository.Repositories
             _db = _server.GetDatabase(_config.Value.Database);
         }
 
-        public List<ToggleResultView> GetToggles()
+        public List<ToggleView> GetToggles()
         {
             var data = _db.GetCollection<ToggleView>(_collection).FindAll();
 
-            var result = new List<ToggleResultView>();
+            var result = new List<ToggleView>();
 
             foreach(var r in data)
             {
-                var item = new ToggleResultView();
-                item.IdToggle = r.Id.ToString();
+                var item = new ToggleView();
+                item.Id = r.Id;
                 item.Name = r.Name;
                 item.Value = r.Value;
                 item.OnlyAdmin = r.OnlyAdmin;

@@ -2,7 +2,7 @@ using FarfetchToggleService.Repository.Views.Toggle;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace FarfetchToggleService.Contracts
+namespace FarfetchToggleService.Contracts.Toggle
 {
     public class ToggleGetByIdResponse
     {

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace FarfetchToggleService.Repository.Views.Message
 {
-    public class SubscribeResponseView
+    public class SubscriptionResponseView
     {
-         public IList<SubscribeResultView> SubscribeResult { get; set; }
+         public IList<SubscriptionResultView> SubscribeResult { get; set; }
          public IList<ResponseMetadataView> ResponseMetadata { get; set; }
     }
 }

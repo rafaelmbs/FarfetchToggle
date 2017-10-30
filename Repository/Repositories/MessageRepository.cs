@@ -1,7 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FarfetchToggleService.Contracts;
+using FarfetchToggleService.Contracts.Message;
 using FarfetchToggleService.Settings;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -17,7 +17,7 @@ namespace FarfetchToggleService.Repository.Repositories
             _config = config;
         }
 
-        public async Task<SubscribeGetResponse> Subscribe(string email)
+        public async Task<SubscriptionGetResponse> Subscribe(string email)
         {
             using (var client = new HttpClient())
             {
@@ -26,7 +26,7 @@ namespace FarfetchToggleService.Repository.Repositories
                 response.EnsureSuccessStatusCode();
 
                 var stringResult = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<SubscribeGetResponse>(stringResult);
+                var result = JsonConvert.DeserializeObject<SubscriptionGetResponse>(stringResult);
                 return result;
             }
         }

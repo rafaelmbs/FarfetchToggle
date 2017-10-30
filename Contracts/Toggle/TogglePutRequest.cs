@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using FarfetchToggleService.Repository.Views;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
-namespace FarfetchToggleService.Contracts
+namespace FarfetchToggleService.Contracts.Toggle
 {
     public class TogglePutRequest
     {
