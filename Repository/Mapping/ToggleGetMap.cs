@@ -1,5 +1,5 @@
 using AutoMapper;
-using FarfetchToggleService.Contracts;
+using FarfetchToggleService.Contracts.Toggle;
 using FarfetchToggleService.Repository.Views.Toggle;
 using System.Collections.Generic;
 

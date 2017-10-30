@@ -1,4 +1,4 @@
-using FarfetchToggleService.Contracts;
+using FarfetchToggleService.Contracts.Toggle;
 using FarfetchToggleService.Repository.Views.Toggle;
 using FarfetchToggleService.Settings;
 using Microsoft.Extensions.Options;

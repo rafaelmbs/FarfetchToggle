@@ -3,7 +3,7 @@ using FarfetchToggleService.Repository.Views;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace FarfetchToggleService.Contracts
+namespace FarfetchToggleService.Contracts.Toggle
 {
     public class TogglePostRequest
     {

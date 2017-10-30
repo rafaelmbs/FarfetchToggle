@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FarfetchToggleService.Contracts;
+using FarfetchToggleService.Contracts.Toggle;
 using FarfetchToggleService.Repository.Views;
 using FarfetchToggleService.Services;
 using Microsoft.AspNetCore.Mvc;

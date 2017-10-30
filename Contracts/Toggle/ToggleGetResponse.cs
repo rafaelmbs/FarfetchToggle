@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using FarfetchToggleService.Repository.Views.Toggle;
 
-namespace FarfetchToggleService.Contracts
+namespace FarfetchToggleService.Contracts.Toggle
 {
     public class ToggleGetResponse
     {

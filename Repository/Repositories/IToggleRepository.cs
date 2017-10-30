@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FarfetchToggleService.Contracts;
+using FarfetchToggleService.Contracts.Toggle;
 using FarfetchToggleService.Repository.Views.Toggle;
 using MongoDB.Bson;
 

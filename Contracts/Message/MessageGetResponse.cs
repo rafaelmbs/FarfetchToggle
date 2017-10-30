@@ -1,7 +1,7 @@
 
 using FarfetchToggleService.Repository.Views.Message;
 
-namespace FarfetchToggleService.Contracts
+namespace FarfetchToggleService.Contracts.Message
 {
     public class MessageGetResponse
     {

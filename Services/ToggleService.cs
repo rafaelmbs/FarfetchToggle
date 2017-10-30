@@ -1,5 +1,5 @@
 using AutoMapper;
-using FarfetchToggleService.Contracts;
+using FarfetchToggleService.Contracts.Toggle;
 using FarfetchToggleService.Repository.Repositories;
 using FarfetchToggleService.Repository.Views.Toggle;
 using Microsoft.AspNetCore.Mvc;

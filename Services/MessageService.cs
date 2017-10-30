@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using FarfetchToggleService.Contracts;
+using FarfetchToggleService.Contracts.Message;
 using FarfetchToggleService.Repository.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +13,7 @@ namespace FarfetchToggleService.Services
             _messageRepository = messageRepository;
         }
 
-        public async Task<SubscribeGetResponse> Subscribe(string email)
+        public async Task<SubscriptionGetResponse> Subscribe(string email)
         {
             var result = await _messageRepository.Subscribe(email);
 
