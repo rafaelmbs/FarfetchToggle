@@ -8,7 +8,7 @@ namespace FarfetchToggleService.Repository.Repositories
 {
     public interface IToggleRepository
     {
-        List<ToggleResultView> GetToggles();
+        List<ToggleView> GetToggles();
 
         ToggleView GetToggle(ObjectId id);
 
