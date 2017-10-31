@@ -27,7 +27,9 @@ namespace FarfetchToggleService.Configuration
                 cfg.AddProfile(new ToggleGetByIdMap());
                 cfg.AddProfiles(Assembly.GetEntryAssembly());
             });
+            services.AddSingleton(Mapper.Instance);
 
+            //Auth
             string domain = $"https://{configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
             {
@@ -45,8 +47,7 @@ namespace FarfetchToggleService.Configuration
                 options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
                 options.AddPolicy("create:messages", policy => policy.Requirements.Add(new HasScopeRequirement("create:messages", domain)));
             });
-
-            services.AddSingleton(Mapper.Instance);
+            
             //AppSettings
             services.Configure<AppSettings>(configuration);
 
