@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FarfetchToggleService.Contracts.Toggle;
 using FarfetchToggleService.Repository.Views;
 using FarfetchToggleService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
@@ -49,6 +50,7 @@ namespace FarfetchToggleService.Controllers
             return Json(toggle);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody]TogglePostRequest toggle)
         {
@@ -57,6 +59,7 @@ namespace FarfetchToggleService.Controllers
             return new OkResult();
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody]TogglePutRequest toggle)
         {

@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FarfetchToggleService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarfetchToggleService.Controllers
@@ -15,6 +16,7 @@ namespace FarfetchToggleService.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)  
         {
