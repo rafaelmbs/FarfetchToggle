@@ -6,6 +6,8 @@ namespace FarfetchToggleService.Settings
 
         public string Database { get; set; }
 
+        public string Collection { get; set; }
+
         public string URI_SNS { get; set; }
     }
 }

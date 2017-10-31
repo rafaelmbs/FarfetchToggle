@@ -1,11 +1,13 @@
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using FarfetchToggleService.Authorization;
+using FarfetchToggleService.Repository.Mapping;
 using FarfetchToggleService.Repository.Repositories;
 using FarfetchToggleService.Services;
 using FarfetchToggleService.Settings;
-using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using FarfetchToggleService.Repository.Mapping;
 
 namespace FarfetchToggleService.Configuration
 {
@@ -24,6 +26,24 @@ namespace FarfetchToggleService.Configuration
                 cfg.AddProfile(new ToggleGetMap());
                 cfg.AddProfile(new ToggleGetByIdMap());
                 cfg.AddProfiles(Assembly.GetEntryAssembly());
+            });
+
+            string domain = $"https://{configuration["Auth0:Domain"]}/";
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = domain;
+                options.Audience = configuration["Auth0:ApiIdentifier"];
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
+                options.AddPolicy("create:messages", policy => policy.Requirements.Add(new HasScopeRequirement("create:messages", domain)));
             });
 
             services.AddSingleton(Mapper.Instance);
