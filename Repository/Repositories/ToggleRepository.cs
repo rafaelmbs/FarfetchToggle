@@ -2,8 +2,9 @@ using FarfetchToggleService.Contracts.Toggle;
 using FarfetchToggleService.Repository.Views.Toggle;
 using FarfetchToggleService.Settings;
 using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using MongoDB.Driver.Builders;
 using Newtonsoft.Json;
 using System;
@@ -16,11 +17,11 @@ namespace FarfetchToggleService.Repository.Repositories
     public class ToggleRepository : IToggleRepository
     {
         private readonly IOptions<AppSettings> _config;
-        private readonly string _collection = "Toggle";
         MongoUrl _mongoUrl;
         MongoClient _client;
         MongoServer _server;
         MongoDatabase _db;
+        MongoCollection<ToggleView> _collection;
 
         public ToggleRepository(IOptions<AppSettings> config)
         {
@@ -29,13 +30,13 @@ namespace FarfetchToggleService.Repository.Repositories
             _client =  new MongoClient(_mongoUrl);
             _server = new MongoServer(MongoServerSettings.FromClientSettings(_client.Settings));
             _db = _server.GetDatabase(_config.Value.Database);
+            _collection = _db.GetCollection<ToggleView>(_config.Value.Collection);
         }
 
         public List<ToggleView> GetToggles()
         {
-            var data = _db.GetCollection<ToggleView>(_collection).FindAll();
-
             var result = new List<ToggleView>();
+            var data = _collection.FindAll();
 
             foreach(var r in data)
             {
@@ -53,13 +54,14 @@ namespace FarfetchToggleService.Repository.Repositories
 
         public ToggleView GetToggle(ObjectId id)
         {
-            var result = Query<ToggleView>.EQ(t => t.Id, id);
-            return _db.GetCollection<ToggleView>(_collection).FindOne(result);       
+            var query = Query<ToggleView>.EQ(t => t.Id, id);
+            var result = _collection.FindOne(query);
+            return result;       
         }
 
         public void CreateToggle(TogglePostRequest toggle)
         {
-            _db.GetCollection<ToggleView>(_collection).Save(toggle);
+            _collection.Save(toggle);
         }
 
         public void UpdateToggle(ObjectId id, TogglePutRequest toggle)
@@ -69,7 +71,7 @@ namespace FarfetchToggleService.Repository.Repositories
             var result = Query<ToggleView>.EQ(t => t.Id, id);
             var operation = Update<TogglePutRequest>.Replace(toggle);
 
-            _db.GetCollection<ToggleView>(_collection).Update(result, operation);
+            _collection.Update(result, operation);
         }
     }
 }
