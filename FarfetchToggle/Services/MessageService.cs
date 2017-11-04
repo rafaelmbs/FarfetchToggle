@@ -12,16 +12,16 @@ namespace FarfetchToggle.Services
             _messageRepository = messageRepository;
         }
 
-        public async Task<SubscriptionGetResponse> Subscribe(string email)
+        public async Task<SubscriptionGetResponse> Subscribe(SubscriptionGetRequest request)
         {
-            var result = await _messageRepository.Subscribe(email);
+            var result = await _messageRepository.Subscribe(request);
 
             return result;
         }
 
-        public async Task<MessageGetResponse> SendMessage(string subject, string message)
+        public async Task<MessageGetResponse> SendMessage(MessageGetRequest request)
         {
-            var result = await _messageRepository.SendMessage(subject, message);
+            var result = await _messageRepository.SendMessage(request);
 
             return result;
         }

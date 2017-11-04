@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FarfetchToggle.Contracts.Message;
 using FarfetchToggle.Contracts.Toggle;
 using FarfetchToggle.Repository.Repositories;
 using MongoDB.Bson;
@@ -43,7 +44,7 @@ namespace FarfetchToggle.Services
             string subject = string.Format("Service Created - '{0}'", toggle.Name);
             string message = string.Format("The following service '{0}' was created with '{1}' value", toggle.Name, toggle.Value);
 
-            await _messageService.SendMessage(subject, message);
+            await _messageService.SendMessage(new MessageGetRequest{ subject = subject, message = message });
         }
 
         public async void UpdateToggle(string id, TogglePutRequest toggle)
@@ -53,7 +54,7 @@ namespace FarfetchToggle.Services
             string subject = string.Format("Service Updated - '{0}'", toggle.Name);
             string message = string.Format("The following service '{0}' was updated to '{1}' value", toggle.Name, toggle.Value);
 
-            await _messageService.SendMessage(subject, message);
+            await _messageService.SendMessage(new MessageGetRequest { subject = subject, message = message });
         }
     }
 }

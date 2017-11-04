@@ -17,12 +17,12 @@ namespace FarfetchToggle.Repository.Repositories
             _config = config;
         }
 
-        public async Task<SubscriptionGetResponse> Subscribe(string email)
+        public async Task<SubscriptionGetResponse> Subscribe(SubscriptionGetRequest request)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_config.Value.URI_SNS);
-                var response = await client.GetAsync($"subscription/{email}");
+                var response = await client.GetAsync($"subscription/{request.email}");
                 response.EnsureSuccessStatusCode();
 
                 var stringResult = await response.Content.ReadAsStringAsync();
@@ -31,12 +31,12 @@ namespace FarfetchToggle.Repository.Repositories
             }
         }
 
-        public async Task<MessageGetResponse> SendMessage(string subject, string message)
+        public async Task<MessageGetResponse> SendMessage(MessageGetRequest request)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_config.Value.URI_SNS);
-                var response = await client.GetAsync($"notification/{subject}/{message}");
+                var response = await client.GetAsync($"notification/{request.subject}/{request.message}");
                 response.EnsureSuccessStatusCode();
 
                 var stringResult = await response.Content.ReadAsStringAsync();

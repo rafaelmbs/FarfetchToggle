@@ -5,8 +5,8 @@ namespace FarfetchToggle.Repository.Repositories
 {
     public interface IMessageRepository
     {
-        Task<SubscriptionGetResponse> Subscribe(string email);
+        Task<SubscriptionGetResponse> Subscribe(SubscriptionGetRequest request);
 
-        Task<MessageGetResponse> SendMessage(string subject, string message);
+        Task<MessageGetResponse> SendMessage(MessageGetRequest request);
     }
 }
