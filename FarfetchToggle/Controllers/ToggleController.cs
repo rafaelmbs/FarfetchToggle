@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FarfetchToggle.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class ToggleController : Controller
     {
         private readonly ToggleService _service;
@@ -18,7 +18,7 @@ namespace FarfetchToggle.Controllers
             _service = service;
         }
 
-        [Authorize]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ToggleGetResponse))]
         [HttpGet]
         public IActionResult Get()
         {
@@ -27,7 +27,7 @@ namespace FarfetchToggle.Controllers
             return Json(result);
         }
 
-        [Authorize]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ToggleGetByIdResponse))]
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
@@ -41,9 +41,8 @@ namespace FarfetchToggle.Controllers
             return Json(toggle);
         }
 
-        [Authorize]
-        [HttpPost]
         [SwaggerResponse((int)HttpStatusCode.OK)]
+        [HttpPost]
         public IActionResult Post([FromBody]TogglePostRequest toggle)
         {
             _service.CreateToggle(toggle);
@@ -51,7 +50,7 @@ namespace FarfetchToggle.Controllers
             return new OkResult();
         }
 
-        [Authorize]
+        [SwaggerResponse((int)HttpStatusCode.OK)]
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody]TogglePutRequest toggle)
         {
