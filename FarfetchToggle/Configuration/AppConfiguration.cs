@@ -8,6 +8,7 @@ using FarfetchToggle.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace FarfetchToggle.Configuration
 {
@@ -45,6 +46,17 @@ namespace FarfetchToggle.Configuration
             {
                 options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
                 options.AddPolicy("create:messages", policy => policy.Requirements.Add(new HasScopeRequirement("create:messages", domain)));
+            });
+
+            //Swagger
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Info 
+                {
+                    Title = "Farfetch Toggle", 
+                    Version = "v1" 
+                });
+                options.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
             });
             
             //AppSettings

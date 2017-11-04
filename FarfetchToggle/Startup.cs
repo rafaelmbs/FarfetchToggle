@@ -39,6 +39,13 @@ namespace FarfetchToggle
 
             app.UseAuthentication();
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Farfetch Toggle V1");
+            });
+
             app.UseMvc();
         }
     }

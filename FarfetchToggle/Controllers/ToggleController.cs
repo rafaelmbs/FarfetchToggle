@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net;
 using FarfetchToggle.Contracts.Toggle;
 using FarfetchToggle.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FarfetchToggle.Controllers
 {
@@ -41,6 +43,7 @@ namespace FarfetchToggle.Controllers
 
         [Authorize]
         [HttpPost]
+        [SwaggerResponse((int)HttpStatusCode.OK)]
         public IActionResult Post([FromBody]TogglePostRequest toggle)
         {
             _service.CreateToggle(toggle);

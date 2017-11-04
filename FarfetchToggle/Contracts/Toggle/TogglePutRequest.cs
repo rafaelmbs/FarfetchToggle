@@ -5,7 +5,7 @@ namespace FarfetchToggle.Contracts.Toggle
 {
     public class TogglePutRequest
     {
-        public ObjectId Id { get; set; }
+        //public ObjectId Id { get; set; }
 
         [BsonElement("Name")]
         public string Name { get; set; }
