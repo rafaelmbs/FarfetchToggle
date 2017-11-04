@@ -22,8 +22,8 @@ namespace FarfetchToggle.Configuration
                 cfg.CreateMissingTypeMaps = true;
                 cfg.EnableNullPropagationForQueryMapping = true;
 
-                cfg.AddProfile(new ToggleGetMap());
-                cfg.AddProfile(new ToggleGetByIdMap());
+                cfg.AddProfile(new ToggleGetMapping());
+                cfg.AddProfile(new ToggleGetByIdMapping());
                 cfg.AddProfiles(Assembly.GetEntryAssembly());
             });
             services.AddSingleton(Mapper.Instance);

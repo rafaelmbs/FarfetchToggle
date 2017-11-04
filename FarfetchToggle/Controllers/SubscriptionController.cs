@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FarfetchToggle.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class SubscriptionController : Controller
     {
         private readonly MessageService _service;
@@ -16,7 +16,6 @@ namespace FarfetchToggle.Controllers
             _service = service;
         }
 
-        [Authorize]
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {
