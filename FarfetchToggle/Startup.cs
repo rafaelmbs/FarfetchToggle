@@ -26,7 +26,7 @@ namespace FarfetchToggle
         {
             services.AddMvc();
 
-            AppConfiguration.ConfigureServices(services, Configuration);
+            ToggleConfiguration.ConfigureServices(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

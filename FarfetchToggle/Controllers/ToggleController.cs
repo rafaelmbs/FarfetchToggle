@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FarfetchToggle.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class ToggleController : Controller
     {
         private readonly ToggleService _service;
@@ -18,7 +18,7 @@ namespace FarfetchToggle.Controllers
             _service = service;
         }
 
-        [Authorize]
+        [SwaggerResponse((int)HttpStatusCode.OK)]
         [HttpGet]
         public IActionResult Get()
         {
@@ -27,11 +27,11 @@ namespace FarfetchToggle.Controllers
             return Json(result);
         }
 
-        [Authorize]
+        [SwaggerResponse((int)HttpStatusCode.OK)]
         [HttpGet("{id}")]
-        public IActionResult GetById(string id)
+        public IActionResult GetById([FromRoute] ToggleGetByIdRequest request)
         {
-            var toggle = _service.GetToggle(id);
+            var toggle = _service.GetToggle(request.id);
 
             if (toggle == null)
             {
@@ -41,19 +41,18 @@ namespace FarfetchToggle.Controllers
             return Json(toggle);
         }
 
-        [Authorize]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(TogglePostRequest))]
         [HttpPost]
-        [SwaggerResponse((int)HttpStatusCode.OK)]
-        public IActionResult Post([FromBody]TogglePostRequest toggle)
+        public IActionResult Post([FromBody]TogglePostRequest request)
         {
-            _service.CreateToggle(toggle);
+            _service.CreateToggle(request);
 
             return new OkResult();
         }
 
-        [Authorize]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(TogglePutRequest))]
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody]TogglePutRequest toggle)
+        public IActionResult Put([FromRoute] string id, [FromBody]TogglePutRequest request)
         {
             var result = _service.GetToggle(id);
 
@@ -62,7 +61,7 @@ namespace FarfetchToggle.Controllers
                 return NotFound();
             }
 
-            _service.UpdateToggle(id, toggle);
+            _service.UpdateToggle(id, request);
             return new OkResult();
         }
     }

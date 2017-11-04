@@ -19,20 +19,13 @@ namespace FarfetchToggle.Controllers
             _service = service;
         }
 
-        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(SubscriptionGetResponse))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(SubscriptionGetRequest))]
         [HttpGet("{email}")]
-        public async Task<IActionResult> Get(string email)
+        public async Task<IActionResult> Get([FromRoute] SubscriptionGetRequest request)
         {
-            try
-            {
-                var result = await _service.Subscribe(email);
+            var result = await _service.Subscribe(request);
 
-                return Json(new { result });
-            }
-            catch (HttpRequestException httpRequestException)
-            {
-                return BadRequest(httpRequestException.Message);
-            }
+            return Json(new { result });
         }
     }
 }

@@ -12,7 +12,7 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace FarfetchToggle.Configuration
 {
-    public class AppConfiguration
+    public class ToggleConfiguration
     {
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
